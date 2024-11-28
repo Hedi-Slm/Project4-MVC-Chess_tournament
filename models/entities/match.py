@@ -1,6 +1,7 @@
 import uuid
 from models.managers.player_manager import PlayerManager
 from views.tournament_manager_view import TournamentManagerView
+from views.utilities_message_view import UtilitiesMessageView
 
 
 class Match:
@@ -25,7 +26,7 @@ class Match:
                 self.player1_score = 0.5
                 self.player2_score = 0.5
             case _:
-                print("Invalid choice")
+                UtilitiesMessageView.display_error_message("Invalid choice")
                 return False
         self.match_result = ([self.player1, self.player1_score], [self.player2, self.player2_score])
         return [(self.player1.chess_id, self.player1_score), (self.player2.chess_id, self.player2_score)]

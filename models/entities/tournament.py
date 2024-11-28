@@ -5,6 +5,7 @@ from models.entities.round import Round
 from models.managers.match_manager import MatchManager
 from models.managers.player_manager import PlayerManager
 from models.managers.round_manager import RoundManager
+from views.utilities_message_view import UtilitiesMessageView
 
 
 class Tournament:
@@ -20,7 +21,7 @@ class Tournament:
         self.players = [] if players is None else players
         self.description = description
         self.has_begun = has_begun
-        self.already_met_players = defaultdict(list) if already_met_players is None else\
+        self.already_met_players = defaultdict(list) if already_met_players is None else \
             defaultdict(list, already_met_players)
         self.players_scores = defaultdict(int) if players_scores is None else defaultdict(int, players_scores)
         self.id = id or str(uuid.uuid4())
@@ -28,12 +29,15 @@ class Tournament:
     def valid_start_condition(self):
         number_of_players = len(self.players)
         if int(number_of_players) < int(2 * self.number_rounds):
-            return False, ("To avoid players facing multiple times during the tournament, "
-                           "there must be at least two times the number of players than rounds.")
+            UtilitiesMessageView.display_warning_message(
+                "To avoid players facing multiple times during the tournament, there must be at least two times"
+                " the number of players than rounds.")
+            return False
         if int(number_of_players) % 2 != 0:
-            return False, "The number of players must be even to start the tournament."
+            UtilitiesMessageView.display_warning_message("The number of players must be even to start the tournament.")
+            return False
 
-        return True, None
+        return True
 
     def pair_players(self):
         if not self.players:

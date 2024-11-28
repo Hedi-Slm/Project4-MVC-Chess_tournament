@@ -3,6 +3,7 @@ import os
 from models.managers.match_manager import MatchManager
 from models.entities.round import Round
 from utils.utilities import ROUNDS_DATA_LOCATION
+from views.utilities_message_view import UtilitiesMessageView
 
 
 class RoundManager:
@@ -14,7 +15,7 @@ class RoundManager:
             with open(ROUNDS_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            print(f"Error loading rounds: {e}")
+            UtilitiesMessageView.display_error_message(f"Error loading rounds: {e}")
         return {key: Round.from_dict(value) for key, value in data.items()}
 
     @staticmethod
@@ -25,7 +26,7 @@ class RoundManager:
             with open(ROUNDS_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            print(f"Error loading rounds: {e}")
+            UtilitiesMessageView.display_error_message(f"Error loading rounds: {e}")
         return data
 
     @staticmethod
@@ -65,5 +66,5 @@ class RoundManager:
             with open(ROUNDS_DATA_LOCATION, "w", encoding="utf-8") as file:
                 json.dump(loaded_rounds, file, indent=4)
         except Exception as e:
-            print(f"Error saving rounds: {e}")
+            UtilitiesMessageView.display_error_message(f"Error saving rounds: {e}")
 

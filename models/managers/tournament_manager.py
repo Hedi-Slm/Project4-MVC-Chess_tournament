@@ -3,6 +3,7 @@ import os
 from models.managers.round_manager import RoundManager
 from models.entities.tournament import Tournament
 from utils.utilities import TOURNAMENTS_DATA_LOCATION
+from views.utilities_message_view import UtilitiesMessageView
 
 
 class TournamentManager:
@@ -14,7 +15,7 @@ class TournamentManager:
             with open(TOURNAMENTS_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            print(f"Error loading tournaments: {e}")
+            UtilitiesMessageView.display_error_message(f"Error loading tournaments: {e}")
         return {key: Tournament.from_dict(value) for key, value in data.items()}
 
     @staticmethod
@@ -25,7 +26,7 @@ class TournamentManager:
             with open(TOURNAMENTS_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            print(f"Error loading tournaments: {e}")
+            UtilitiesMessageView.display_error_message(f"Error loading tournaments: {e}")
         return data
 
     @staticmethod
@@ -47,7 +48,7 @@ class TournamentManager:
             with open(TOURNAMENTS_DATA_LOCATION, "w", encoding="utf-8") as file:
                 json.dump(loaded_tournaments, file, indent=4)
         except Exception as e:
-            print(f"Error saving tournaments: {e}")
+            UtilitiesMessageView.display_error_message(f"Error saving tournaments: {e}")
 
     @staticmethod
     def end_tournament_round(current_tournament, current_round):

@@ -2,7 +2,7 @@ import json
 import os
 from models.entities.player import Player
 from utils.utilities import PLAYER_DATA_LOCATION
-from utils.utilities import check_chess_id_format
+from views.utilities_message_view import UtilitiesMessageView
 
 
 class PlayerManager:
@@ -16,7 +16,7 @@ class PlayerManager:
                 data = json.load(file)
             return {key: Player(**player) for key, player in data.items()}
         except (OSError, json.JSONDecodeError) as e:
-            print(f"Error loading players: {e}")
+            UtilitiesMessageView.display_error_message(f"Error loading players: {e}")
             return {}
 
     @staticmethod
@@ -34,7 +34,7 @@ class PlayerManager:
             with open(PLAYER_DATA_LOCATION, "w", encoding="utf-8") as file:
                 json.dump(serialized_players, file, indent=4)
         except OSError as e:
-            print(f"Error saving players: {e}")
+            UtilitiesMessageView.display_error_message(f"Error saving players: {e}")
 
     @staticmethod
     def create_player(player_info):

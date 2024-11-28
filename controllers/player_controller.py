@@ -1,6 +1,7 @@
 from models.managers.player_manager import PlayerManager
 from utils.utilities import check_chess_id_format
 from views.player_view import PlayerView
+from views.utilities_message_view import UtilitiesMessageView
 
 
 class PlayerController:
@@ -14,11 +15,11 @@ class PlayerController:
 
         # Check if the chess ID is valid and if it's not already in the database
         if not check_chess_id_format(player_id):
-            print("Invalid chess ID format.")
+            UtilitiesMessageView.display_warning_message("Invalid chess ID format.")
             return
 
         if player_id in self.players:
-            print("Chess ID already exists in the database.")
+            UtilitiesMessageView.display_warning_message("Chess ID already exists in the database.")
             return
 
         player_data = PlayerView.get_player_details(player_id)
@@ -28,7 +29,7 @@ class PlayerController:
         self.players[player_id] = player
 
         PlayerManager.save_players(self.players)
-        print("Player added successfully.")
+        UtilitiesMessageView.display_success_message("Player added successfully.")
 
     def show_player_list(self):
         # Show the sorted player list via the view
@@ -46,7 +47,6 @@ class PlayerController:
                 case "2":
                     self.show_player_list()
                 case "3":
-                    print("Returning to main menu.")
                     break
                 case _:
-                    print("Invalid choice. Please try again.")
+                    UtilitiesMessageView.display_error_message("Invalid choice. Please try again.")

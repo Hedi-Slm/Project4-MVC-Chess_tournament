@@ -16,7 +16,6 @@ class Round:
     def end_round(self):
         self.end_date = str(datetime.now())
         self.is_ended = True
-        print(f"Round end time: {self.end_date}")
 
     def to_dict(self):
         return {

@@ -5,6 +5,7 @@ from views.player_view import PlayerView
 from views.report_view import ReportView
 from views.tournament_manager_view import TournamentManagerView
 from views.tournament_view import TournamentView
+from views.utilities_message_view import UtilitiesMessageView
 
 
 class ReportController:
@@ -28,13 +29,13 @@ class ReportController:
 
     def show_rounds_and_matches_in_chosen_tournament(self):
         if not self.chosen_tournament:
-            print("Choose a tournament first")
+            UtilitiesMessageView.display_warning_message("Choose a tournament first")
             return
         ReportView.show_rounds_and_matches(self.chosen_tournament)
 
     def show_player_list_in_chosen_tournament(self):
         if not self.chosen_tournament:
-            print("Choose a tournament first")
+            UtilitiesMessageView.display_warning_message("Choose a tournament first")
             return
         ReportView.show_players_in_tournament(self.chosen_tournament)
 
@@ -55,4 +56,4 @@ class ReportController:
                 case "6":
                     break
                 case _:
-                    print("Invalid choice")
+                    UtilitiesMessageView.display_error_message("Invalid choice")
