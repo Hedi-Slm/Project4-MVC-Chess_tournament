@@ -15,7 +15,9 @@ class RoundManager:
             with open(ROUNDS_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error loading rounds: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error loading rounds: {e}"
+            )
         return {key: Round.from_dict(value) for key, value in data.items()}
 
     @staticmethod
@@ -26,7 +28,9 @@ class RoundManager:
             with open(ROUNDS_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error loading rounds: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error loading rounds: {e}"
+            )
         return data
 
     @staticmethod
@@ -57,14 +61,19 @@ class RoundManager:
 
         for key, value in loaded_rounds.items():
             if key == rounds.round_id:
-                loaded_rounds[key] = round_dict  # Replace the round with updated data
+                loaded_rounds[key] = (
+                    round_dict  # Replace the round with updated data
+                )
                 break
         else:
-            loaded_rounds[rounds.round_id] = round_dict  # Add new round if it doesn't exist
+            loaded_rounds[rounds.round_id] = (
+                round_dict  # Add new round if it doesn't exist
+            )
 
         try:
             with open(ROUNDS_DATA_LOCATION, "w", encoding="utf-8") as file:
                 json.dump(loaded_rounds, file, indent=4)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error saving rounds: {e}")
-
+            UtilitiesMessageView.display_error_message(
+                f"Error saving rounds: {e}"
+            )

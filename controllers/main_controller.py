@@ -23,5 +23,3 @@ class MainController:
                     report_controller.report_menu()
                 case "4":
                     break
-
-

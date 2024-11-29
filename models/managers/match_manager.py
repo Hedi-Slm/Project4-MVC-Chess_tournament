@@ -14,7 +14,9 @@ class MatchManager:
             with open(MATCHES_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error loading matches: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error loading matches: {e}"
+            )
         return {key: Match.from_dict(value) for key, value in data.items()}
 
     @staticmethod
@@ -25,7 +27,9 @@ class MatchManager:
             with open(MATCHES_DATA_LOCATION, "r", encoding="utf-8") as file:
                 data = json.load(file)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error loading matches: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error loading matches: {e}"
+            )
         return data
 
     @staticmethod
@@ -42,7 +46,9 @@ class MatchManager:
             with open(MATCHES_DATA_LOCATION, "w", encoding="utf-8") as file:
                 json.dump(loaded_matches, file, indent=4)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error saving matches: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error saving matches: {e}"
+            )
 
     @staticmethod
     def load_matches_to_round(match_id_list):

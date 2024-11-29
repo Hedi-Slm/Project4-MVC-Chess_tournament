@@ -1,5 +1,4 @@
 from utils.utilities import get_valid_date
-from datetime import datetime
 
 
 class TournamentManagerView:
@@ -24,11 +23,17 @@ class TournamentManagerView:
         print("Tournaments: \n")
 
         for index, tournament in enumerate(tournaments, start=1):
-            print(f"{index}. {tournament.name} - {tournament.location} "
-                  f"({tournament.start_date} - {tournament.end_date})")
+            print(
+                f"{index}. {tournament.name} - {tournament.location} "
+                f"({tournament.start_date} - {tournament.end_date})"
+            )
 
         choice = input("Enter the number of the tournament: ")
-        if not choice.isdigit() or int(choice) < 1 or int(choice) > len(tournaments):
+        if (
+                not choice.isdigit()
+                or int(choice) < 1
+                or int(choice) > len(tournaments)
+        ):
             print("Please enter a valid number")
             return None
         return tournaments[int(choice) - 1]
@@ -44,13 +49,18 @@ class TournamentManagerView:
         print(f"Start date: {tournament.start_date}")
         print(f"End date: {tournament.end_date}")
         print(f"Number of total rounds: {tournament.number_rounds}")
-        print(f"Current round: {tournament.current_round if tournament.has_begun else 'Tournament has not yet begun'}")
+        round_name = tournament.current_round if tournament.has_begun \
+            else 'Tournament has not yet begun'
+        print(f"Current round: {round_name}")
         if tournament.players_scores:
-            print(f"Current player ranking:")
-            for chess_id, score in sorted(tournament.players_scores.items(), key=lambda x: x[1], reverse=True):
+            print("Current player ranking:")
+            for chess_id, score in sorted(tournament.players_scores.items(),
+                                          key=lambda x: x[1], reverse=True):
                 for player in tournament.players:
                     if player.chess_id == chess_id:
-                        print(f"{player.first_name} {player.last_name} current score: {score}")
+                        print(f"{player.first_name} {player.last_name}"
+                              f" current score: {score}")
+
         print(f"Description: {tournament.description}")
         if tournament.players:
             TournamentManagerView.display_players(tournament.players)
@@ -88,13 +98,16 @@ class TournamentManagerView:
             return
         print("Players:")
         for player in tournament_players:
-            print(f"{player.first_name} {player.last_name} ID: {player.chess_id}")
+            print(
+                f"{player.first_name} {player.last_name} ID: {player.chess_id}"
+            )
 
     @staticmethod
     def set_match_result(player1, player2):
-        print(f"Test {player1} vs {player2}")
         print(f"Who won between {player1.first_name} and {player2.first_name}")
-        result = input(f"Type 1 for: {player1.first_name} \nType 2 for: {player2.first_name} \nType 3 for draw: ")
+        result = input(f"Type 1 for: {player1.first_name} \n"
+                       f"Type 2 for: {player2.first_name} \n"
+                       f"Type 3 for draw: ")
         return result
 
     @staticmethod
@@ -127,7 +140,11 @@ class TournamentManagerView:
     def get_new_tournament_start_date(current_start_date, end_date):
         print(f"Start date: {current_start_date} - End date: {end_date}")
         while True:
-            new_start_date = (get_valid_date("Enter the new tournament start date (dd/mm/yyyy): ")).strftime("%d/%m/%Y")
+            new_start_date = (
+                get_valid_date(
+                    "Enter the new tournament start date (dd/mm/yyyy): "
+                )
+            ).strftime("%d/%m/%Y")
             if new_start_date < end_date:
                 break
             print("Start date must be before the end date. Please try again.")
@@ -137,7 +154,11 @@ class TournamentManagerView:
     def get_new_tournament_end_date(current_end_date, start_date):
         print(f"Start date: {start_date} - End date: {current_end_date}")
         while True:
-            new_end_date = (get_valid_date("Enter the new tournament end date (dd/mm/yyyy): ")).strftime("%d/%m/%Y")
+            new_end_date = (
+                get_valid_date(
+                    "Enter the new tournament end date (dd/mm/yyyy): "
+                )
+            ).strftime("%d/%m/%Y")
             if new_end_date > start_date:
                 break
             print("End date must be after the start date. Please try again.")

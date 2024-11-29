@@ -13,13 +13,16 @@ class PlayerController:
         # Get player details from the view
         player_id = PlayerView.get_player_id()
 
-        # Check if the chess ID is valid and if it's not already in the database
         if not check_chess_id_format(player_id):
-            UtilitiesMessageView.display_warning_message("Invalid chess ID format.")
+            UtilitiesMessageView.display_warning_message(
+                "Invalid chess ID format."
+            )
             return
 
         if player_id in self.players:
-            UtilitiesMessageView.display_warning_message("Chess ID already exists in the database.")
+            UtilitiesMessageView.display_warning_message(
+                "Chess ID already exists in the database."
+            )
             return
 
         player_data = PlayerView.get_player_details(player_id)
@@ -29,11 +32,16 @@ class PlayerController:
         self.players[player_id] = player
 
         PlayerManager.save_players(self.players)
-        UtilitiesMessageView.display_success_message("Player added successfully.")
+        UtilitiesMessageView.display_success_message(
+            "Player added successfully."
+        )
 
     def show_player_list(self):
         # Show the sorted player list via the view
-        sorted_players = sorted(self.players.values(), key=lambda player: player.first_name+player.last_name)
+        sorted_players = sorted(
+            self.players.values(),
+            key=lambda player: player.first_name + player.last_name,
+        )
         PlayerView.show_players_list(sorted_players)
 
     def show_player_menu(self):
@@ -49,4 +57,6 @@ class PlayerController:
                 case "3":
                     break
                 case _:
-                    UtilitiesMessageView.display_error_message("Invalid choice. Please try again.")
+                    UtilitiesMessageView.display_error_message(
+                        "Invalid choice. Please try again."
+                    )

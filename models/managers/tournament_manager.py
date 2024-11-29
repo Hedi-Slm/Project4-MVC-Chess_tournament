@@ -12,21 +12,31 @@ class TournamentManager:
         if not os.path.exists(TOURNAMENTS_DATA_LOCATION):
             return {}
         try:
-            with open(TOURNAMENTS_DATA_LOCATION, "r", encoding="utf-8") as file:
+            with open(
+                TOURNAMENTS_DATA_LOCATION, "r", encoding="utf-8"
+            ) as file:
                 data = json.load(file)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error loading tournaments: {e}")
-        return {key: Tournament.from_dict(value) for key, value in data.items()}
+            UtilitiesMessageView.display_error_message(
+                f"Error loading tournaments: {e}"
+            )
+        return {
+            key: Tournament.from_dict(value) for key, value in data.items()
+        }
 
     @staticmethod
     def load_all_tournaments_dict():
         if not os.path.exists(TOURNAMENTS_DATA_LOCATION):
             return {}
         try:
-            with open(TOURNAMENTS_DATA_LOCATION, "r", encoding="utf-8") as file:
+            with open(
+                TOURNAMENTS_DATA_LOCATION, "r", encoding="utf-8"
+            ) as file:
                 data = json.load(file)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error loading tournaments: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error loading tournaments: {e}"
+            )
         return data
 
     @staticmethod
@@ -45,10 +55,14 @@ class TournamentManager:
             loaded_tournaments[tournament.id] = tournament.to_dict()
 
         try:
-            with open(TOURNAMENTS_DATA_LOCATION, "w", encoding="utf-8") as file:
+            with open(
+                TOURNAMENTS_DATA_LOCATION, "w", encoding="utf-8"
+            ) as file:
                 json.dump(loaded_tournaments, file, indent=4)
         except Exception as e:
-            UtilitiesMessageView.display_error_message(f"Error saving tournaments: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error saving tournaments: {e}"
+            )
 
     @staticmethod
     def end_tournament_round(current_tournament, current_round):

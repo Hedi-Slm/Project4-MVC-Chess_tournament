@@ -18,7 +18,8 @@ class TournamentView:
             return
 
         for tournament in tournaments:
-            print(f"{tournament.name} - {tournament.location} - {tournament.start_date} - {tournament.end_date}")
+            print(f"{tournament.name} - {tournament.location} -"
+                  f" {tournament.start_date} - {tournament.end_date}")
 
     @staticmethod
     def get_tournament_details():
@@ -26,12 +27,18 @@ class TournamentView:
         location = input("Enter tournament location: ")
 
         # Use the helper function to get and validate dates
-        start_date = get_valid_date("Enter tournament start date (dd/mm/yyyy): ")
+        start_date = get_valid_date(
+            "Enter tournament start date (dd/mm/yyyy): "
+        )
         while True:
-            end_date = get_valid_date("Enter tournament end date (dd/mm/yyyy): ")
+            end_date = get_valid_date(
+                "Enter tournament end date (dd/mm/yyyy): "
+            )
             if end_date > start_date:
                 break
-            print("End date must be later than the start date. Please try again.")
+            print(
+                "End date must be later than the start date. Please try again."
+            )
 
         description = input("Enter tournament description: ")
         return {

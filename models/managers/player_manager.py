@@ -16,7 +16,9 @@ class PlayerManager:
                 data = json.load(file)
             return {key: Player(**player) for key, player in data.items()}
         except (OSError, json.JSONDecodeError) as e:
-            UtilitiesMessageView.display_error_message(f"Error loading players: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error loading players: {e}"
+            )
             return {}
 
     @staticmethod
@@ -29,12 +31,16 @@ class PlayerManager:
 
     @staticmethod
     def save_players(players):
-        serialized_players = {player.chess_id: player.to_dict() for player in players.values()}
+        serialized_players = {
+            player.chess_id: player.to_dict() for player in players.values()
+        }
         try:
             with open(PLAYER_DATA_LOCATION, "w", encoding="utf-8") as file:
                 json.dump(serialized_players, file, indent=4)
         except OSError as e:
-            UtilitiesMessageView.display_error_message(f"Error saving players: {e}")
+            UtilitiesMessageView.display_error_message(
+                f"Error saving players: {e}"
+            )
 
     @staticmethod
     def create_player(player_info):
@@ -45,4 +51,3 @@ class PlayerManager:
     def load_players_to_tournament(player_id_list):
         players_db = PlayerManager.load_all_players_object()
         return [players_db[player_id] for player_id in player_id_list]
-

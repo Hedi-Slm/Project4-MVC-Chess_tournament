@@ -9,8 +9,22 @@ from views.utilities_message_view import UtilitiesMessageView
 
 
 class Tournament:
-    def __init__(self, name, location, start_date, end_date, description, number_rounds=4, current_round=0,
-                 rounds=None, players=None, has_begun=False, already_met_players=None, players_scores=None, id=None):
+    def __init__(
+        self,
+        name,
+        location,
+        start_date,
+        end_date,
+        description,
+        number_rounds=4,
+        current_round=0,
+        rounds=None,
+        players=None,
+        has_begun=False,
+        already_met_players=None,
+        players_scores=None,
+        id=None,
+    ):
         self.name = name
         self.location = location
         self.start_date = start_date
@@ -21,20 +35,30 @@ class Tournament:
         self.players = [] if players is None else players
         self.description = description
         self.has_begun = has_begun
-        self.already_met_players = defaultdict(list) if already_met_players is None else \
-            defaultdict(list, already_met_players)
-        self.players_scores = defaultdict(int) if players_scores is None else defaultdict(int, players_scores)
+        self.already_met_players = (
+            defaultdict(list)
+            if already_met_players is None
+            else defaultdict(list, already_met_players)
+        )
+        self.players_scores = (
+            defaultdict(int)
+            if players_scores is None
+            else defaultdict(int, players_scores)
+        )
         self.id = id or str(uuid.uuid4())
 
     def valid_start_condition(self):
         number_of_players = len(self.players)
-        if int(number_of_players) < int(2 * self.number_rounds):
+        if int(number_of_players) < 2 * int(self.number_rounds):
             UtilitiesMessageView.display_warning_message(
-                "To avoid players facing multiple times during the tournament, there must be at least two times"
+                "To avoid players facing multiple times during the"
+                " tournament, there must be at least two times"
                 " the number of players than rounds.")
             return False
         if int(number_of_players) % 2 != 0:
-            UtilitiesMessageView.display_warning_message("The number of players must be even to start the tournament.")
+            UtilitiesMessageView.display_warning_message(
+                "The number of players must be even to start the tournament."
+            )
             return False
 
         return True
@@ -43,16 +67,26 @@ class Tournament:
         if not self.players:
             return []
 
-        sorted_players = sorted(self.players, key=lambda player: self.players_scores.get(player.chess_id, 0),
-                                reverse=True)
+        sorted_players = sorted(
+            self.players,
+            key=lambda player: self.players_scores.get(player.chess_id, 0),
+            reverse=True,
+        )
         pairs = []
         while len(sorted_players) >= 2:
             player1 = sorted_players.pop(0)
             for player2 in sorted_players:
-                if player1.chess_id not in self.already_met_players[player2.chess_id]:
+                if (
+                    player1.chess_id
+                    not in self.already_met_players[player2.chess_id]
+                ):
                     pairs.append((player1, player2))
-                    self.already_met_players[player1.chess_id].append(player2.chess_id)
-                    self.already_met_players[player2.chess_id].append(player1.chess_id)
+                    self.already_met_players[player1.chess_id].append(
+                        player2.chess_id
+                    )
+                    self.already_met_players[player2.chess_id].append(
+                        player1.chess_id
+                    )
                     sorted_players.remove(player2)
                     break
         return pairs
@@ -66,7 +100,7 @@ class Tournament:
         return matches
 
     def create_round(self):
-        if self.current_round >= self.number_rounds:
+        if int(self.current_round) >= int(self.number_rounds):
             print("Maximum number of rounds reached.")
             return None
 
@@ -91,8 +125,12 @@ class Tournament:
             "end_date": self.end_date,
             "number_rounds": self.number_rounds,
             "current_round": self.current_round,
-            "rounds": [rnd.round_id for rnd in self.rounds],  # Save only round IDs
-            "players": [player.chess_id for player in self.players],  # Assume it's a list of player IDs
+            "rounds": [
+                rnd.round_id for rnd in self.rounds
+            ],  # Save only round IDs
+            "players": [
+                player.chess_id for player in self.players
+            ],  # Assume it's a list of player IDs
             "description": self.description,
             "has_begun": self.has_begun,
             "already_met_players": self.already_met_players,

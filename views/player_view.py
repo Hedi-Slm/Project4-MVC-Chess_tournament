@@ -17,7 +17,8 @@ class PlayerView:
             return
 
         for player in players:
-            print(f"{player.first_name} {player.last_name} - ID: {player.chess_id}")
+            print(f"{player.first_name} {player.last_name} "
+                  f"- ID: {player.chess_id}")
 
     @staticmethod
     def get_player_id():
@@ -27,7 +28,9 @@ class PlayerView:
     def get_player_details(chess_id):
         first_name = input("Enter first name of the player: ")
         last_name = input("Enter last name of the player: ")
-        birth_date = get_valid_date("Enter birth date of the player (dd/mm/yyyy): ")
+        birth_date = get_valid_date(
+            "Enter birth date of the player (dd/mm/yyyy): "
+        )
         return {
             "first_name": first_name,
             "last_name": last_name,

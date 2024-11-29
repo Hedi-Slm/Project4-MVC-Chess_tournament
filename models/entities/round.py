@@ -4,8 +4,15 @@ from models.managers.match_manager import MatchManager
 
 
 class Round:
-    def __init__(self, name, start_date=str(datetime.now()), end_date=None, matches=None, round_id=None,
-                 is_ended=False):
+    def __init__(
+        self,
+        name,
+        start_date=str(datetime.now()),
+        end_date=None,
+        matches=None,
+        round_id=None,
+        is_ended=False,
+    ):
         self.name = name
         self.start_date = start_date
         self.end_date = end_date
@@ -22,7 +29,9 @@ class Round:
             "name": self.name,
             "start_date": self.start_date,
             "end_date": self.end_date,
-            "matches": [match.match_id for match in self.matches],  # Save only match IDs
+            "matches": [
+                match.match_id for match in self.matches
+            ],  # Save only match IDs
             "round_id": self.round_id,
             "is_ended": self.is_ended,
         }
@@ -38,4 +47,3 @@ class Round:
             round_id=data["round_id"],
             is_ended=data["is_ended"],
         )
-
